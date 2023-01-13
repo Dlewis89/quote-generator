@@ -1,6 +1,8 @@
 # quote-generator
 ## Generates a random quotes from a json file using the fetch api.
 
+![ScreenShot](https://github.com/Dlewis89/quote-generator/blob/master/screenshots/quote-generator-screenshot-2.PNG)
+
 ### Technologies
 
 - HTML5
