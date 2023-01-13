@@ -17,8 +17,9 @@
 
 - Generates random quotes.
 - Tweet current quote to Twitter.
+- Quote History
 
 ### In Development
 
-- Quote History
+
 
