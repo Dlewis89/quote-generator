@@ -37,6 +37,7 @@ function addQuoteToHistory(quote) {
 function populateQuoteContainerFromHistory(quote) {
     authorText.textContent = quote.author;
     quoteText.textContent = quote.text;
+    dropDownContent.hidden = true;
 }
 
 function toggleDropDownContent() {
