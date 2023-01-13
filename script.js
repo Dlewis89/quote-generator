@@ -1,4 +1,6 @@
 const longQuoteCharacterThreshold = 200;
+const dropDownBtn = document.getElementById('dropdown-btn');
+const dropDownContent = document.getElementById('dropdown-content');
 const quoteContainer = document.getElementById('quote-container');
 const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
@@ -7,6 +9,7 @@ const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 
 let apiQuotes = [];
+let quoteHistory = [];
 
 function showLoadingSpinner() {
     loader.hidden = false;
@@ -18,9 +21,37 @@ function removeLoadingSpinner() {
     quoteContainer.hidden = false;
 }
 
+function addQuoteToHistory(quote) {
+    quoteHistory.push(quote);
+
+    const a = document.createElement('a');
+    a.setAttribute('href', '#');
+    a.addEventListener('click', function() {
+        populateQuoteContainerFromHistory(quote);
+    });
+    a.textContent = quote.author;
+
+    dropDownContent.appendChild(a);
+}
+
+function populateQuoteContainerFromHistory(quote) {
+    authorText.textContent = quote.author;
+    quoteText.textContent = quote.text;
+}
+
+function toggleDropDownContent() {
+    if (!dropDownContent.hidden) {
+        dropDownContent.hidden = true;
+        return;
+    }
+    dropDownContent.hidden = false;
+}
+
 function newQuote() {
     showLoadingSpinner();
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
+
+    addQuoteToHistory(quote);
 
     authorText.textContent = quote.author ?? 'Unknown';
 
@@ -42,7 +73,7 @@ async function getQuotes() {
         newQuote();
         removeLoadingSpinner();
     } catch (err) {
-        showLoadingSpinner();
+        removeLoadingSpinner();
         alert('Something went wrong');
     }
 }
@@ -55,5 +86,8 @@ function tweetQuote() {
 //Event Listener
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
+dropDownBtn.addEventListener('click', toggleDropDownContent);
 
-window.onload(getQuotes());
+window.onload = function() {
+    getQuotes();
+};
